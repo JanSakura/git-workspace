@@ -17,7 +17,7 @@ public:
 private:
 	SOCKET serverSock;
 	SOCKET clientSock;
-	//要加{}初始化，否则会被随机填充
+	//瑕佸姞{}鍒濆鍖栵紝鍚﹀垯浼氳闅忔満濉厖
 	char recvBuf[BufSize]{};
 	bool init(const char* ip, unsigned short port);
 };
