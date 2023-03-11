@@ -1,6 +1,6 @@
 #include"server.h"
 #include <iostream>
-//导入WinSock2.h、WS2tcpip.h实现部分
+//碌录脠毛WinSock2.h隆垄WS2tcpip.h脢碌脧脰虏驴路脰
 #pragma comment(lib,"ws2_32.lib")
 
 int main() {
