@@ -1,7 +1,7 @@
 #include<WinSock2.h>
 #include<WS2tcpip.h>
 #include <iostream>
-//µ¼ÈëWinSock2.h¡¢WS2tcpip.hÊµÏÖ²¿·Ö
+//å¯¼å…¥WinSock2.hã€WS2tcpip.hå®ç°éƒ¨åˆ†
 #pragma comment(lib,"ws2_32.lib")
 
 #define MAXLink 128
@@ -9,7 +9,7 @@
 #define BufSize 128
 
 int main() {
-	//´ò¿ªÍøÂç¿â
+	//æ‰“å¼€ç½‘ç»œåº“
 	WSADATA data{};
 	if (WSAStartup(MAKEWORD(2, 2), &data) == SOCKET_ERROR) {
 		perror("WSAStartup err:");
@@ -17,7 +17,7 @@ int main() {
 		return -1;
 	}
 
-	//È·¶¨ÎªTCPĞ­ÒéÕ»£¬×îºó²ÎÊıÎª0Ò²ĞĞ£¬Ç°Á½¸öÒÑ¾­È·ÈÏÁË
+	//ç¡®å®šä¸ºTCPåè®®æ ˆï¼Œæœ€åå‚æ•°ä¸º0ä¹Ÿè¡Œï¼Œå‰ä¸¤ä¸ªå·²ç»ç¡®è®¤äº†
 	SOCKET serverSock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (serverSock == INVALID_SOCKET) {
 		std::cout << "server socket err:" << WSAGetLastError() << std::endl;
@@ -26,12 +26,12 @@ int main() {
 	}
 
 	sockaddr_in servAddr;
-	//bind È·ÈÏĞ­Òé×å
+	//bind ç¡®è®¤åè®®æ—
 	servAddr.sin_family = AF_INET;
-	//htons ¼´host to net short£¬½«16Î»±¾µØ×Ö½ÚĞò×ª»¯ÎªÍøÂç×Ö½ÚĞò£¬Èç¶Ë¿Ú
+	//htons å³host to net shortï¼Œå°†16ä½æœ¬åœ°å­—èŠ‚åºè½¬åŒ–ä¸ºç½‘ç»œå­—èŠ‚åºï¼Œå¦‚ç«¯å£
 	servAddr.sin_port = htons(ServerPort);
-	//htonl host to net long ½«32Î»×Ö½ÚĞò×ª»¯ÎªÍøÂç×Ö½ÚĞò
-	//Ê¹ÓÃ¸ü°²È«µÄ
+	//htonl host to net long å°†32ä½å­—èŠ‚åºè½¬åŒ–ä¸ºç½‘ç»œå­—èŠ‚åº
+	//ä½¿ç”¨æ›´å®‰å…¨çš„
 	inet_pton(AF_INET, "127.0.0.1", &servAddr.sin_addr.S_un.S_addr);
 	if (bind(serverSock, (sockaddr*)&servAddr, sizeof(sockaddr)) == SOCKET_ERROR) {
 		std::cout << "bind func err:" << WSAGetLastError() << std::endl;
@@ -39,7 +39,7 @@ int main() {
 		return -1;
 	}
 
-	//listenº¯Êı
+	//listenå‡½æ•°
 	if (listen(serverSock, MAXLink) == -1) {
 		std::cout << "listen func err:" << WSAGetLastError() << std::endl;
 		closesocket(serverSock);
@@ -57,7 +57,7 @@ int main() {
 
 	const char* msg = "hello world";
 	char recvBuf[BufSize]{};
-	// sendº¯ÊıºÍrecvº¯Êı±ØĞë¼ì²é
+	// sendå‡½æ•°å’Œrecvå‡½æ•°å¿…é¡»æ£€æŸ¥
 	if (send(clientSock, msg, strlen(msg), 0) < 0) {
 		std::cout << "send func err:" << WSAGetLastError() << std::endl;
 		closesocket(serverSock);
@@ -72,7 +72,7 @@ int main() {
 	}
 	if (recvRet < 0) {
 		if (WSAGetLastError() == 10054) {
-			std::cout << "¿Í»§¶ËÇ¿ÖÆ¶Ï¿ª" << std::endl;
+			std::cout << "å®¢æˆ·ç«¯å¼ºåˆ¶æ–­å¼€" << std::endl;
 		}
 		else {
 			std::cout << "recv func err:" << WSAGetLastError() << std::endl;
@@ -87,7 +87,7 @@ int main() {
 	
 	closesocket(serverSock);
 	closesocket(clientSock);
-	//µ÷ÓÃÍø¿¨µÄÉè±¸Ä£¿éÒ²ÇåÀí
+	//è°ƒç”¨ç½‘å¡çš„è®¾å¤‡æ¨¡å—ä¹Ÿæ¸…ç†
 	WSACleanup();
 	system("pause");
 	return 0;
