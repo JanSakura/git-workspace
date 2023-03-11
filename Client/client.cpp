@@ -15,7 +15,7 @@ void Client::close() {
 }
 
 bool Client::init(const char* ip, unsigned short port) {
-	//´ò¿ªÍøÂç¿â
+	//æ‰“å¼€ç½‘ç»œåº“
 	WSADATA data{};
 	if (WSAStartup(MAKEWORD(2, 2), &data) == SOCKET_ERROR) {
 		std::cout << "WSAStartup err :" << WSAGetLastError() << std::endl;
@@ -33,7 +33,7 @@ bool Client::init(const char* ip, unsigned short port) {
 	servAddr.sin_family = AF_INET;
 	servAddr.sin_port = htons(port);
 	inet_pton(AF_INET, ip , &servAddr.sin_addr.S_un.S_addr);
-	//connect º¯Êý
+	//connect å‡½æ•°
 	if (connect(servSock, (sockaddr*)&servAddr, sizeof(servAddr)) == SOCKET_ERROR) {
 		std::cout << "connect err:" << WSAGetLastError() << std::endl;
 		//closesocket(servSock);
@@ -59,7 +59,7 @@ bool Client::recvMsg() {
 	}
 	if (recvRet < 0) {
 		if (WSAGetLastError() == 10054) {
-			std::cout << "·þÎñÆ÷Ç¿ÖÆ¶Ï¿ª" << std::endl;
+			std::cout << "æœåŠ¡å™¨å¼ºåˆ¶æ–­å¼€" << std::endl;
 		}
 		else {
 			std::cout << "recv func err:" << WSAGetLastError() << std::endl;
