@@ -21,14 +21,14 @@ void Server::close() {
 }
 
 bool Server::init(const char* ip, unsigned short port) {
-	//´ò¿ªÍøÂç¿â
+	//æ‰“å¼€ç½‘ç»œåº“
 	WSADATA data{};
 	if (WSAStartup(MAKEWORD(2, 2), &data) == SOCKET_ERROR) {
 		std::cout << "WSAStartup func err:" << WSAGetLastError() << std::endl;
 		return false;
 	}
 
-	//È·¶¨ÎªTCPÐ­ÒéÕ»£¬×îºó²ÎÊýÎª0Ò²ÐÐ£¬Ç°Á½¸öÒÑ¾­È·ÈÏÁË
+	//ç¡®å®šä¸ºTCPåè®®æ ˆï¼Œæœ€åŽå‚æ•°ä¸º0ä¹Ÿè¡Œï¼Œå‰ä¸¤ä¸ªå·²ç»ç¡®è®¤äº†
 	serverSock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (serverSock == INVALID_SOCKET) {
 		std::cout << "server socket err:" << WSAGetLastError() << std::endl;
@@ -37,12 +37,12 @@ bool Server::init(const char* ip, unsigned short port) {
 	}
 
 	sockaddr_in servAddr;
-	//bind È·ÈÏÐ­Òé×å
+	//bind ç¡®è®¤åè®®æ—
 	servAddr.sin_family = AF_INET;
-	//htons ¼´host to net short£¬½«16Î»±¾µØ×Ö½ÚÐò×ª»¯ÎªÍøÂç×Ö½ÚÐò£¬Èç¶Ë¿Ú
+	//htons å³host to net shortï¼Œå°†16ä½æœ¬åœ°å­—èŠ‚åºè½¬åŒ–ä¸ºç½‘ç»œå­—èŠ‚åºï¼Œå¦‚ç«¯å£
 	servAddr.sin_port = htons(port);
-	//htonl host to net long ½«32Î»×Ö½ÚÐò×ª»¯ÎªÍøÂç×Ö½ÚÐò
-	//Ê¹ÓÃ¸ü°²È«µÄ
+	//htonl host to net long å°†32ä½å­—èŠ‚åºè½¬åŒ–ä¸ºç½‘ç»œå­—èŠ‚åº
+	//ä½¿ç”¨æ›´å®‰å…¨çš„
 	inet_pton(AF_INET, ip, &servAddr.sin_addr.S_un.S_addr);
 	if (bind(serverSock, (sockaddr*)&servAddr, sizeof(sockaddr)) == SOCKET_ERROR) {
 		std::cout << "bind func err:" << WSAGetLastError() << std::endl;
@@ -50,7 +50,7 @@ bool Server::init(const char* ip, unsigned short port) {
 		return false;
 	}
 
-	//listenº¯Êý
+	//listenå‡½æ•°
 	if (listen(serverSock, MAXLink) == -1) {
 		std::cout << "listen func err:" << WSAGetLastError() << std::endl;
 		closesocket(serverSock);
@@ -88,7 +88,7 @@ bool Server::recvMsg() {
 	}
 	if (recvRet < 0) {
 		if (WSAGetLastError() == 10054) {
-			std::cout << "¿Í»§¶ËÇ¿ÖÆ¶Ï¿ª" << std::endl;
+			std::cout << "å®¢æˆ·ç«¯å¼ºåˆ¶æ–­å¼€" << std::endl;
 		}
 		else {
 			std::cout << "recv func err:" << WSAGetLastError() << std::endl;
