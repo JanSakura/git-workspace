@@ -15,7 +15,7 @@ public:
 private:
 	SOCKET servSock;
 	char recvBuf[BufSize]{};
-	//recv返回的长度
+	//recv路碌禄脴碌脛鲁陇露脠
 	int recvRet = 0;
 	bool init(const char* ip, unsigned short port);
 };
